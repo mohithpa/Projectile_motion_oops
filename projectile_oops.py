@@ -3,6 +3,11 @@ import math
 import numpy as np
 
 class Projectile:
+    #class level attributes
+    #air_resistance = 2.5
+    all = []
+
+
     def __init__(self, theta: float, g: float, u: float):
         # Run validations to the received arguments/ Assert values
         assert theta >= 0 and theta <= 360, f"theta {theta} is not in asserted range!"
@@ -13,6 +18,10 @@ class Projectile:
         self.g = g
         self.theta = (np.pi/180)*theta
         self.u = u
+
+        #Actions to execute
+        Projectile.all.append(self)
+
 
     def tof(self):
         time_of_flight = (2*self.u*np.sin(self.theta))/self.g
@@ -36,11 +45,18 @@ class Projectile:
             y.append(yval)
         return x, y
 
-projectile1 = Projectile(45, 9.8, u = 20 )
-a,b = projectile1.x_y_calc()
-print(Projectile.__dict__) # All the attributes of the class level
-print(projectile1.__dict__) # All the attributes for the instance level
-print(a)
-print(b)
-plt.plot(a,b)
-plt.savefig("oops.png")
+    def __repr__(self):#representing you method
+        return f"Projectile('{self.theta}',{self.g}, {self.u})"
+
+if __name__ == "__main__":
+    projectile1 = Projectile(45, 9.8, u = 20)
+    projectile2 = Projectile(10, 9.8, u = 5)
+    projectile3 = Projectile(85, 9.8, u = 33)
+    print(Projectile.all)
+    a,b = projectile1.x_y_calc()
+    #print(Projectile.__dict__) # All the attributes of the class level
+    #print(projectile1.__dict__) # All the attributes for the instance level
+    #print(a)
+    #print(b)
+    #plt.plot(a,b)
+    #plt.savefig("oops.png")
